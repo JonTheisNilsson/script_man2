@@ -43,7 +43,7 @@ function Complete-ServiceStop {
 
 # CHANGE THESE VALUES (MUST MATCH install.ps1)
 # (Optionally, make a config file and read from it...)
-$serviceName = "ServiceDemo"
+$serviceName = "script_man2"
 $installFolder = "C:\Program Files\$serviceName"
 $logFile = "$installFolder\service.log"
 
