@@ -23,7 +23,7 @@ $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfil
 
 # Who the task runs as: every logged-in member of the Users group,
 # in their own session (so they can see the window).
-$principal = New-ScheduledTaskPrincipal -GroupId "BUILTIN\Users" -RunLevel Limited
+$principal = New-ScheduledTaskPrincipal -GroupId "S-1-5-32-545" -RunLevel Limited
 
 # No -Trigger, so the task only runs when started from a script.
 Register-ScheduledTask -TaskName $taskName -Action $action -Principal $principal -Force | Out-Null

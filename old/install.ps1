@@ -2,10 +2,10 @@
 # Registers service.ps1 as a Windows service and starts it.
 
 # CHANGE THESE 5 VALUES
-$serviceName   = "ServiceDemo"
-$displayName   = "Service Demo"
-$scriptName    = "service_demo.ps1"
-$description   = "A demo Windows service written in PowerShell"
+$serviceName   = "service_script_man2"
+$displayName   = "Script mandatory 2"
+$scriptName    = "service_script_man2.ps1"
+$description   = "Mandatory 2 - Windows service written in PowerShell"
 $installFolder = "C:\Program Files\$serviceName"
 
 

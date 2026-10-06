@@ -2,7 +2,7 @@
 # Stops and removes the service created by install.ps1.
 
 # CHANGE THIS TO THE NAME OF YOUR SERVICE (MUST MATCH install.ps1)
-$serviceName = "ServiceDemo"
+$serviceName = "service_script_man2"
 
 
 # -----------------------------------------------------------------
