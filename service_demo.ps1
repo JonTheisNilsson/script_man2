@@ -49,7 +49,9 @@ $logFile = "$installFolder\service.log"
 
 Add-Content -Path $logFile -Value "Service started"
 
-# skift til pascalcase
+# aftale navn på scriptet, og ændr det i alle filer
+# skift til pascalcase?
+# start a boot - Set-Service -Name "ServiceName" -StartupType Automatic
 # hvis vi gemmer backup-hashen behøver vi ikke beregne den hvert 5. sekund
 # find script path så vi kan lave relative paths.
 # kig på $currentPath = (Split-Path -Parent $MyInvocation.MyCommand.Path)
@@ -58,7 +60,7 @@ $target_file = "C:\Users\John Doe\Desktop\Man_2\honeypot.txt"
 $backup_file = "C:\Users\John Doe\Desktop\Man_2\Honeypot_Backup\honeypot_backup.txt"
 $monitor_log = "C:\Users\John Doe\Desktop\Man_2\monitor.log"
 
-$extern_drev = "C:\Users\John Doe\Desktop\Man_2\monitor.log"
+$extern_drev = "C:\Users\John Doe\Desktop\Man_2\extern\"
 
 while (Test-ServiceRunning) {
     # Opret datovariabel
