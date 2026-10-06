@@ -49,10 +49,10 @@ $logFile = "$installFolder\service.log"
 
 Add-Content -Path $logFile -Value "Service started"
 
-#todo: skift til pascalcase
-#
-
-
+# skift til pascalcase
+# hvis vi gemmer backup-hashen behøver vi ikke beregne den hvert 5. sekund
+# find script path så vi kan lave relative paths.
+# kig på $currentPath = (Split-Path -Parent $MyInvocation.MyCommand.Path)
 
 $target_file = "C:\Users\John Doe\Desktop\Man_2\honeypot.txt"
 $backup_file = "C:\Users\John Doe\Desktop\Man_2\Honeypot_Backup\honeypot_backup.txt"
@@ -69,7 +69,7 @@ while (Test-ServiceRunning) {
 
         # Beregn hash af den aktuelle fil
         $current_hash = (Get-FileHash $target_file).Hash
-        $backup_hash = (Get-FileHash $backup_file).hash   #todo: hvis vi gemmer backup-hashen behøver vi ikke beregne den hvert 5. sekund
+        $backup_hash = (Get-FileHash $backup_file).hash  
 
         # Sammenlign med backup-hash
         if ($current_hash -eq $backup_hash) {
