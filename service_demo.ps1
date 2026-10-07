@@ -98,7 +98,7 @@ while (Test-ServiceRunning) {
     
     ForEach ($file in $files) {     
         $temp_path = Join-Path -Path $extern_drev -ChildPath $file
-        $new_hash = ($temp_path).Hash
+        $new_hash = (Get-FileHash $temp_path).Hash
         if ($new_hash -eq $backup_hash) {
             Add-Content -Path $monitor_log -Value "$time Filen kopieret til eksternt drev"
             # en eller anden alarm. lige nu vil den også blive ved med at logge den samme besked hver 5 sekund
