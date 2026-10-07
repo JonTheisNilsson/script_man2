@@ -1,0 +1,14 @@
+
+
+
+For at lave relative paths har vi brugt $MyInvocation.MyCommand.Path som returnere path til det script der bliver kørt. Vi troede først at installationen af en service pegede på det sted  hvor scriptet lå oprindeligt, men det kopiere hele scriptet, som så bliver kørt fra installations pathen, så $$MyInvocation.MyCommand.Path er overflødig, og vi kunne blot have brugt $installFolder istedet. Vi har beholdt den som eksemplet, da den virker god at kunne.
+
+
+Med Test-Path checker vi at filen findes 
+
+
+Vi har prøvet at køre en Task, når file er blevet kopiret som en slags alert, men det blev lidt "spammy", og ikke så god stil, så den er udkommenteret. 
+
+Det ville måske give mere mening at køre hele scriptet som en scheduled task i stedet for en service, når vi alligevel køre det i et fastlagt interval.
+
+En anden løsning kunne være at sætte servicen op så den lyttede på events, som for eksempel indsættelse af medie, og så kørte hash sammenligningen, men vi havde ikke tid til at kigge mere ind i det.

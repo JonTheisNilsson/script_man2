@@ -66,8 +66,8 @@ $monitor_log = Join-Path -Path $script_path -ChildPath "monitor.log"
 $extern_drev = Join-Path -Path $script_path -ChildPath "extern"
 
 $backup_hash = (Get-FileHash $backup_file).hash  
+# kan eventuelt skiftes ud med hardcoded hash, eller hentes fra config
 # 1CD28021AA2A4360BCA501B72B3EC2A4F8B2276147E22B3A022E223A5CEEA254
-# Add-Content -Path $monitor_log -Value $backup_hash
 
 while (Test-ServiceRunning) {
     # Opret datovariabel
@@ -84,7 +84,6 @@ while (Test-ServiceRunning) {
         }
         else {
             Add-Content -Path $monitor_log -Value "$time Filen findes, men hash matcher ikke"
-            Add-Content -Path $monitor_log -Value $current_hash
             Copy-Item $backup_file $target_file -Force
         }
     }
@@ -93,7 +92,7 @@ while (Test-ServiceRunning) {
         Copy-Item $backup_file $target_file -Force
     }
 
-    # Check om filen er kopieret til externt drev proof of concept
+    # Check om filen er kopieret til externt drev - proof of concept
     $files = Get-ChildItem -Path $extern_drev -File # alle file i directory
     
     ForEach ($file in $files) {     
@@ -101,8 +100,7 @@ while (Test-ServiceRunning) {
         $new_hash = (Get-FileHash $temp_path).Hash
         if ($new_hash -eq $backup_hash) {
             Add-Content -Path $monitor_log -Value "$time Filen kopieret til eksternt drev"
-            # en eller anden alarm. lige nu vil den også blive ved med at logge den samme besked hver 5 sekund
-            # istedet for at logge kan vi køre en task
+            # istedet for at logge kan vi køre en task der popper en alert op. Kræver registering i task_scheduler
             # Start-ScheduledTask -TaskName "ServiceDemo-Alert"
         }
     }
