@@ -53,22 +53,19 @@ Add-Content -Path $logFile -Value "Service started"
 # skift til pascalcase?
 # start a boot - Set-Service -Name "ServiceName" -StartupType Automatic
 # hvis vi gemmer backup-hashen behøver vi ikke beregne den hvert 5. sekund
-# hvorfor add-content istedet for write_output(er det det den hedder?)?
-# 
 
 # selve script og powershell delen er nem at forstå, men det er svært at finde rundt i de forskellige windows elementer. Det er mange forældrede løsninger til de problemstilliger på nettet, og det virker som om det er et langt større problem med Windows end det er med Linux.
-
-
-
 
 # give path til det directory scriptet er i. check om det virker som forventet med services
 $script_path = (Split-Path -Parent $MyInvocation.MyCommand.Path) 
 
-# hvis $MyInvocation ikke virker, kan vi måske bruge installFolder 
+# hvis $MyInvocation ikke virker, kan vi måske bruge installFolder - hvorfor har vi valgt denne her løsning
 $target_file = Join-Path -Path $script_path -ChildPath "honeypot.txt"
 $backup_file = Join-Path -Path $script_path -ChildPath "honeypot_backup.txt"
 $monitor_log = Join-Path -Path $script_path -ChildPath "monitor.log"
 $extern_drev = Join-Path -Path $script_path -ChildPath "extern"
+
+$backup_hash = (Get-FileHash $backup_file).hash  
 
 while (Test-ServiceRunning) {
     # Opret datovariabel
@@ -76,11 +73,9 @@ while (Test-ServiceRunning) {
 
     # Kontroller om målfilen eksisterer
     if (Test-Path $target_file) {
-
         # Beregn hash af den aktuelle fil
         $current_hash = (Get-FileHash $target_file).Hash
-        $backup_hash = (Get-FileHash $backup_file).hash  
-
+        
         # Sammenlign med backup-hash
         if ($current_hash -eq $backup_hash) {
             Add-Content -Path $monitor_log -Value "$time Filen findes og hash matcher"
