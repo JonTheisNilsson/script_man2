@@ -56,6 +56,11 @@ Add-Content -Path $logFile -Value "Service started"
 # hvorfor add-content istedet for write_output(er det det den hedder?)?
 # 
 
+# selve script og powershell delen er nem at forstå, men det er svært at finde rundt i de forskellige windows elementer. Det er mange forældrede løsninger til de problemstilliger på nettet, og det virker som om det er et langt større problem med Windows end det er med Linux.
+
+
+
+
 # give path til det directory scriptet er i. check om det virker som forventet med services
 $script_path = (Split-Path -Parent $MyInvocation.MyCommand.Path) 
 
@@ -99,10 +104,12 @@ while (Test-ServiceRunning) {
         if ($new_hash -eq $backup_hash) {
             Add-Content -Path $monitor_log -Value "$time Filen kopieret til eksternt drev"
             # en eller anden alarm. lige nu vil den også blive ved med at logge den samme besked hver 5 sekund
+            # istedet for at logge kan vi køre en task
+            # Start-ScheduledTask -TaskName "ServiceDemo-Alert"
         }
     }
 
-    Start-Sleep -Seconds 5
+    Start-Sleep -Seconds 5  # det her er ikke en god løsning, men den virker
 }
 Add-Content -Path $logFile -Value "Service stopped"
 

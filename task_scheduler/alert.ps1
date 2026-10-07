@@ -4,8 +4,7 @@
 # Optional: using the task scheduler is optional and this is just an example
 
 Write-Host "=================================="
-Write-Host "  WARNING from ServiceDemo"
-Write-Host "  Something happened at $(Get-Date)"
+Write-Host "  WARNING Filen kopieret til eksternt drev
 Write-Host "=================================="
 
 Read-Host "Press Enter to close"
