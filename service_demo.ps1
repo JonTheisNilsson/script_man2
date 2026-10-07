@@ -53,14 +53,17 @@ Add-Content -Path $logFile -Value "Service started"
 # skift til pascalcase?
 # start a boot - Set-Service -Name "ServiceName" -StartupType Automatic
 # hvis vi gemmer backup-hashen behøver vi ikke beregne den hvert 5. sekund
-# find script path så vi kan lave relative paths.
-# kig på $currentPath = (Split-Path -Parent $MyInvocation.MyCommand.Path)
+# hvorfor add-content istedet for write_output(er det det den hedder?)?
+# 
 
-$target_file = "C:\Users\John Doe\Desktop\Man_2\honeypot.txt"
-$backup_file = "C:\Users\John Doe\Desktop\Man_2\Honeypot_Backup\honeypot_backup.txt"
-$monitor_log = "C:\Users\John Doe\Desktop\Man_2\monitor.log"
+# give path til det directory scriptet er i. check om det virker som forventet med services
+$script_path = (Split-Path -Parent $MyInvocation.MyCommand.Path) 
 
-$extern_drev = "C:\Users\John Doe\Desktop\Man_2\extern\"
+# hvis $MyInvocation ikke virker, kan vi måske bruge installFolder 
+$target_file = Join-Path -Path $script_path -ChildPath "honeypot.txt"
+$backup_file = Join-Path -Path $script_path -ChildPath "honeypot_backup.txt"
+$monitor_log = Join-Path -Path $script_path -ChildPath "monitor.log"
+$extern_drev = Join-Path -Path $script_path -ChildPath "extern"
 
 while (Test-ServiceRunning) {
     # Opret datovariabel
@@ -89,15 +92,13 @@ while (Test-ServiceRunning) {
     }
 
     # Check om filen er kopieret til externt drev proof of concept
-
-    $Files = Get-ChildItem -Path $extern_drev -File
+    $files = Get-ChildItem -Path $extern_drev -File # alle file i directory
     
-    # Loop through Files
-    ForEach ($File in $Files) {
-        $new_hash = (Get-FileHash $File).Hash
+    ForEach ($file in $files) {
+        $new_hash = (Get-FileHash $file).Hash
         if ($new_hash -eq $backup_hash) {
-            Add-Content -Path $monitor_log -Value "$time Filener kopieret til eksternt drev"
-            # en eller anden alarm
+            Add-Content -Path $monitor_log -Value "$time Filen kopieret til eksternt drev"
+            # en eller anden alarm. lige nu vil den også blive ved med at logge den samme besked hver 5 sekund
         }
     }
 
