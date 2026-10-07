@@ -66,6 +66,8 @@ $monitor_log = Join-Path -Path $script_path -ChildPath "monitor.log"
 $extern_drev = Join-Path -Path $script_path -ChildPath "extern"
 
 $backup_hash = (Get-FileHash $backup_file).hash  
+# 1CD28021AA2A4360BCA501B72B3EC2A4F8B2276147E22B3A022E223A5CEEA254
+# Add-Content -Path $monitor_log -Value $backup_hash
 
 while (Test-ServiceRunning) {
     # Opret datovariabel
@@ -94,8 +96,9 @@ while (Test-ServiceRunning) {
     # Check om filen er kopieret til externt drev proof of concept
     $files = Get-ChildItem -Path $extern_drev -File # alle file i directory
     
-    ForEach ($file in $files) {
-        $new_hash = (Get-FileHash $file).Hash
+    ForEach ($file in $files) {     
+        $temp_path = Join-Path -Path $extern_drev -ChildPath $file
+        $new_hash = ($temp_path).Hash
         if ($new_hash -eq $backup_hash) {
             Add-Content -Path $monitor_log -Value "$time Filen kopieret til eksternt drev"
             # en eller anden alarm. lige nu vil den også blive ved med at logge den samme besked hver 5 sekund
