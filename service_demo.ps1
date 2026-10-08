@@ -49,17 +49,10 @@ $logFile = "$installFolder\service.log"
 
 Add-Content -Path $logFile -Value "Service started"
 
-# aftale navn på scriptet, og ændr det i alle filer
-# skift til pascalcase?
-# start a boot - Set-Service -Name "ServiceName" -StartupType Automatic
-# hvis vi gemmer backup-hashen behøver vi ikke beregne den hvert 5. sekund
-
-# selve script og powershell delen er nem at forstå, men det er svært at finde rundt i de forskellige windows elementer. Det er mange forældrede løsninger til de problemstilliger på nettet, og det virker som om det er et langt større problem med Windows end det er med Linux.
-
 # give path til det directory scriptet er i. check om det virker som forventet med services
 $script_path = (Split-Path -Parent $MyInvocation.MyCommand.Path) 
 
-# hvis $MyInvocation ikke virker, kan vi måske bruge installFolder - hvorfor har vi valgt denne her løsning
+# hvis $MyInvocation ikke virker, kan vi måske bruge $installFolder
 $target_file = Join-Path -Path $script_path -ChildPath "honeypot.txt"
 $backup_file = Join-Path -Path $script_path -ChildPath "honeypot_backup.txt"
 $monitor_log = Join-Path -Path $script_path -ChildPath "monitor.log"
