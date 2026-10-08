@@ -77,6 +77,7 @@ while (Test-ServiceRunning) {
         }
         else {
             Add-Content -Path $monitor_log -Value "$time Filen findes, men hash matcher ikke"
+            Add-Content -Path $monitor_log -Value "Hash af ny aktuel fil $current_hash"
             Copy-Item $backup_file $target_file -Force
         }
     }
